@@ -49,15 +49,7 @@ jobs:
         mkdir -p database
         touch database/database.sqlite
 
-    - name: Run Migrations
-      env:
-        DB_CONNECTION: mysql
-        DB_HOST: 127.0.0.1
-        DB_PORT: 3306
-        DB_DATABASE: abc
-        DB_USERNAME: root
-        DB_PASSWORD: ""
-      run: php artisan migrate --force
+    
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
       env:
