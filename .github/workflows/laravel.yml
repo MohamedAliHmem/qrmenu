@@ -44,15 +44,27 @@ jobs:
       run: chmod -R 777 storage bootstrap/cache
 
     - name: Create Database
+      if: false  # Skip this step since we're using a remote database
       run: |
         mkdir -p database
         touch database/database.sqlite
 
     - name: Run Migrations
+      env:
+        DB_CONNECTION: mysql
+        DB_HOST: https://databases-auth.000webhost.com/index.php
+        DB_PORT: 3306
+        DB_DATABASE: id22303855_abc
+        DB_USERNAME: id22303855_root
+        DB_PASSWORD: cafe123CAFE@
       run: php artisan migrate --force
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
       env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
+        DB_CONNECTION: mysql
+        DB_HOST: https://databases-auth.000webhost.com/index.php
+        DB_PORT: 3306
+        DB_DATABASE: id22303855_abc
+        DB_USERNAME: id22303855_root
+        DB_PASSWORD: cafe123CAFE@
       run: php artisan test
