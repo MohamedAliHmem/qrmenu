@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->decimal('price', 8, 2);
             $table->string('logo')->nullable();
+            $table->integer('idCategory');
+            $table->integer('position')->default(0);
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }

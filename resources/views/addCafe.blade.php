@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-        
+
         <meta charset="utf-8" />
         <title>Register</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,7 @@
     </head>
 
     <body>
-        
+
         <div class="account-pages my-5 pt-sm-1">
             <div class="container">
                 <div class="row justify-content-center">
@@ -42,34 +42,34 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body pt-0"> 
+                            <div class="card-body pt-0">
                                 <br>
                                 <div class="p-2">
-                                
+
                                     <form enctype="multipart/form-data" class="needs-validation" novalidate action="/addC" method="post">
                                     @csrf
                                         <div class="mb-3">
                                             <label for="useremail" class="form-label">cafe Name</label>
-                                            <input type="text" class="form-control" id="cafeName" name="cafeName" placeholder="Enter cafe name" required>  
+                                            <input type="text" class="form-control" id="cafeName" name="cafeName" placeholder="Enter cafe name" required>
                                             <div class="invalid-feedback">
                                                 Please Enter cafe Name
-                                            </div>      
+                                            </div>
                                         </div>
-                                        
+
                                         <div class="mb-3">
                                             <label for="useremail" class="form-label">Adress</label>
-                                            <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Enter adresse" required>  
+                                            <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Enter adresse" required>
                                             <div class="invalid-feedback">
                                                 Please Enter Adresse
-                                            </div>      
+                                            </div>
                                         </div>
-                
+
                                         <div class="mb-3">
                                             <label for="username" class="form-label">Phone number</label>
                                             <input type="number" class="form-control" id="phone" name="phone" placeholder="Enter Phone Number" required>
                                             <div class="invalid-feedback">
                                                 Please Enter Phone Number
-                                            </div>  
+                                            </div>
                                         </div>
 
                                         <div class="mb-3 row">
@@ -77,21 +77,21 @@
                                             <div class="col-md-10">
                                                 <input class="form-control" type="file" placeholder="Logo"
                                                     id="example-text-input" accept="image/*" name="logo">
-                                                
+
                                             </div>
                                         </div>
-                    
+
                                         <div class="mt-4 d-grid">
                                             <button class="btn btn-primary waves-effect waves-light" type="submit">Register</button>
                                         </div>
 
-                
+
                                     </form>
                                 </div>
-            
+
                             </div>
                         </div>
-                        
+
 
                     </div>
                 </div>
@@ -107,7 +107,7 @@
 
         <!-- validation init -->
         <script src="assets/js/pages/validation.init.js"></script>
-        
+
         <!-- App js -->
         <script src="assets/js/app.js"></script>
 

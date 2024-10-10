@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <meta name="description" content="Découvrez Paloma Tech Solutions, votre partenaire idéal pour des menus digitaux et des QR codes dans le secteur de la restauration. Notre plateforme permet aux cafés et restaurants de créer, gérer et personnaliser leurs menus en ligne de manière simple et efficace. Offrez à vos clients une expérience de commande fluide et sans contact, directement depuis leur smartphone. Profitez de nos solutions innovantes pour optimiser la gestion de votre établissement, que vous soyez un petit café ou un grand restaurant.">
+    <meta name="keywords" content="QR Code Menu, Digital Menu, Restaurant QR Code, Cafe Menu Generator, Online Menu Creator, Contactless Menu, Menu QR Code Generator, Restaurant Management Tool, Order Online System, Customizable QR Code, Menu for Cafes, Digital Ordering System, Mobile Menu App, Food Ordering QR Code, Contactless Dining">
+
+    <link rel="icon" href="{{ asset('assets-welcome-page/img/logo/P.png') }}" type="image/png">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -12,7 +16,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
+    <script src="https://js.stripe.com/v3/"></script>
 
 
     <!-- Scripts -->
@@ -41,16 +45,17 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">Se connecter</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">S'inscrire</a>
                                 </li>
                             @endif
                         @else
+                            <a href="/dashboard" class="nav-link ">Go To Dashboard</a>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

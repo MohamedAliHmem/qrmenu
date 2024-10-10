@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger("idClient")->nullable();
             $table->string('name')->nullable();
             $table->string('email')->unique()->nullable();
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
 
@@ -30,6 +31,9 @@ return new class extends Migration
             $table->string('logo')->nullable();
 
             $table->string('role')->nullable();
+            $table->string('secondEmail')->nullable();
+
+            $table->unsignedBigInteger("idAbonnement")->nullable();
 
             $table->rememberToken();
             $table->timestamps();

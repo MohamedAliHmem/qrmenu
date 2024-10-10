@@ -3,27 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Stripe\Stripe;
+use Stripe\PaymentIntent;
 
 class PaymentController extends Controller
 {
-    public function showPaymentPage(Request $request)
+    public function subscribe(Request $request)
     {
-        $total = $request->query('total', 0);
-        return view('payment', ['total' => $total]);
+        $paymentPlan = $request->input('paymentPlan');
+
+        $amount = $paymentPlan === 'yearly' ? 1200 : 100;
+
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $intent = PaymentIntent::create([
+            'amount' => $amount,
+            'currency' => 'eur',
+            'source' => $request->input('stripeToken'),
+        ]);
+
+        return redirect()->back()->with('success', 'Payment successful!');
     }
-
-    public function showPOSPage()
-{
-    $products = [
-        ['id' => 1, 'name' => 'Product 1', 'price' => 10.0, 'image' => 'path/to/image1.jpg'],
-        ['id' => 2, 'name' => 'Product 2', 'price' => 15.0, 'image' => 'path/to/image2.jpg'],
-        // Add more products as needed
-    ];
-    echo "hello";
-
-    $orderItems = []; // Fetch or initialize order items
-    $total = 0.0; // Calculate the total amount
-
-    return view('pos/pos', ['products' => $products, 'orderItems' => $orderItems, 'total' => $total]);
-}
 }

@@ -5,9 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Kofi - Coffee Shop Website Template</title>
+    <title>Commander en ligne</title>
     <meta name="robots" content="noindex, follow" />
-    <meta name="description" content="Kofi - Coffee Shop Website Template">
+    <meta name="description" content="Commander en ligne">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Favicon -->
@@ -38,7 +38,7 @@
 
 <body>
 
-    <div class="header sticky-header section">
+    <div>
         <div class="container-fluid">
             <div class="row align-items-center">
 
@@ -50,7 +50,7 @@
                 ?>
                  <div class="offcanvas offcanvas-end" id="offcanvas-cart">
                     <div class="offcanvas-header">
-                        <h5>Shoping Cart</h5>
+                        <h5>Votre Panier</h5>
                         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body d-flex flex-column">
@@ -58,58 +58,63 @@
                             <div class="header-cart-products">
                                 @foreach ($orderSeparated as $order)
                                     <?php
-                                        $orderSeparatedByEtoile = array_filter(explode('*', $order));
+                                        $orderSeparatedByEtoile = array_filter(explode(':', $order));
                                         $product = \App\Models\Produit::find($orderSeparatedByEtoile[0]);
-                                        $total = $total + ($product->price * $orderSeparatedByEtoile[1]);
-                                        $count ++ ;
+                                        if ($product) {
+                                            $total += $product->price * $orderSeparatedByEtoile[1];
+                                            $count++;
                                     ?>
                                     <div class="header-cart-product">
                                         <div class="header-cart-product-thumb">
-                                            <a href="product-details.html" class="header-cart-product-image"><img src="{{asset('storage/'.$product->logo)}}" alt="House Coffee Original" width="90" height="103"></a>
-                                            <a href="/deleteProductCart/{{$product->id}}/{{$orderSeparatedByEtoile[1]}}/{{$numTable}}/{{$product->idCafe}}" class="header-cart-product-remove"><i class="sli-close"></i></a>
+                                            @if ($product->logo)
+<a href="/product/{{$numTable}}/{{$product -> id}}/{{$product -> idCafe}}" class="header-cart-product-image"><img src="{{asset('storage/'.$product->logo)}}" alt="House Coffee Original" width="90" height="103"></a>
+                                            @endif
+
+                                            <a href="/deleteProductCart/{{$product->id}}/{{$orderSeparatedByEtoile[1]}}/{{$numTable}}/{{$product->idCafe}}" class="header-cart-product-remove"><i class="sli-close" style="color: #fff"></i></a>
                                         </div>
                                         <div class="header-cart-product-content">
-                                            <h5 class="header-cart-product-title"><a href="product-details.html">{{$product->name}}</a></h5>
-                                            <span class="header-cart-product-quantity">{{$orderSeparatedByEtoile[1]}} x ${{$product->price}}</span>
+                                            <h5 class="header-cart-product-title"><a href="/product/{{$numTable}}/{{$product -> id}}/{{$product -> idCafe}}">{{$product->name}}</a></h5>
+                                            <span class="header-cart-product-quantity">{{$orderSeparatedByEtoile[1]}} x {{$product->price}} DT</span>
                                         </div>
                                     </div>
+                                    <?php
+                                    }
+                                    ?>
                                 @endforeach
 
 
                             </div>
                         </div>
-                        <div class="header-cart-footer">
-                            <h4 class="header-cart-total">Total: <span>${{$total}}</span></h4>
-                            <div class="header-cart-buttons">
-                                <a href="/Checkout/{{$numTable}}" class="btn btn-outline-dark btn-primary-hover">CHECKOUT</a>
+                        @if ($orderSeparated)
+                            <div class="header-cart-footer">
+                                <h4 class="header-cart-total">Total: <span>{{$total}} DT</span></h4>
+                                <div class="header-cart-buttons">
+                                    <a href="/Checkout/{{$numTable}}" class="btn btn-outline-dark btn-primary-hover" data-bs-toggle="modal" data-bs-target="#noteModalPanier">Acheter Maintenant</a>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col">
-                    <div class="header-action-item">
-                        <button class="header-action-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-cart"><i class="sli-basket-loaded"><span class="count">{{$count}}</span></i> <span class="amount">${{$total}}</span></button>
-                    </div>
-                </div>
+                        @endif
 
+                    </div>
+                </div>
+                
+                <div class="col-lg-10 col"></div>
                 <!-- Menu Start -->
-                <div class="col d-none d-lg-block">
-                    @if($numTable==0)
-                    <a href='/dashboard' class="btn btn-dark btn-primary-hover rounded-0">Return To Dashboard</a>
-                    @endif
-
-                </div>
+                @if($numTable==0)
+                    <div class="col">
+                        <a href='/dashboard' class="btn btn-dark btn-primary-hover rounded-0">Return To Dashboard</a>
+                    </div>
+                    <div class="col-lg-6 col"></div>
+                @endif
                 <!-- Menu End -->
 
-
-                <div class="col-auto">
-
-                        <div class="header-action-item d-lg-none">
-                            <button class="header-action-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-header"><i class="sli-menu"></i></button>
-                        </div>
+                <div class="col-lg-2 col d-flex justify-content-end">
+                    <div class="header-action-item">
+                        <button class="header-action-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-cart">
+                            <i class="sli-basket-loaded"><span class="count">{{$count}}</span></i>
+                            <span class="amount">{{$total}} DT</span>
+                        </button>
                     </div>
                 </div>
-
 
             </div>
         </div>
@@ -123,7 +128,7 @@
     <div class="page-banner-section section">
         <div class="container">
             <ul class="breadcrumb">
-                <li>Our Products</li>
+                <li>Nos produits</li>
             </ul>
         </div>
     </div>
@@ -133,45 +138,139 @@
     <div class="shop-product-section section section-padding">
         <div class="container">
         @if(Session::has('alert'))
-                            <div class="alert alert-success">
-                                {{ Session::get('alert') }}
-                            </div>
-                        @endif
-            <!-- Shop Top Bar Start -->
-            <div class="shop-top-bar">
-                <div class="shop-top-bar-item">
-                    <div class="nav list-grid-toggle">
-                        <button class="active" data-bs-toggle="tab" data-bs-target="#product-grid"><i class="sli-grid"></i></button>
-                    </div>
-                </div>
-
+            <div class="alert alert-success">
+                {{ Session::get('alert') }}
             </div>
-            <!-- Shop Top Bar End -->
+        @endif
 
-            <!-- Product Tab Start -->
-            <div class="tab-content" id="shopProductTabContent">
-                <div class="tab-pane fade show active" id="product-grid">
-                    <div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 mb-n6">
-                    @foreach($data as $item)
-                        <div class="col mb-6">
-                            <div class="product">
-                                <div class="product-thumb">
-                                    <a href="/product/{{$numTable}}/{{$item -> id}}/{{$item -> idCafe}}" class="product-image"><img loading="lazy" src="{{asset('storage/'.$item->logo)}}" alt="House Coffee Original" width="268" height="306"></a>
+        @if(Session::has('card'))
+            <div class="alert alert-success">
+                {{ Session::get('card') }}
+            </div>
+        @endif
+<style>
+    .category-section {
+    margin-bottom: 2rem;
+}
 
-                                </div>
+.category-section h3 {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+}
+
+</style>
+
+<!-- Product Categories and Products Start -->
+<div class="tab-content" id="shopProductTabContent">
+    @foreach($categories as $category)
+        <div class="category-section">
+            <h3>{{ strtoupper($category->title) }}</h3> <!-- Display category title -->
+            <div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 mb-n6">
+                @foreach($productsByCategory[$category->id] as $item)
+                    <div class="col mb-6">
+                        <div class="product">
+
+                            @if ($sendOrders)
+                                <a href="/product/{{ $numTable }}/{{ $item->id }}/{{ $item->idCafe }}" class="product-image">
+                                    @if ($item->logo)
+                                        <div class="product-thumb">
+                                            <img loading="lazy" src="{{ asset('storage/' . $item->logo) }}" alt="Product Image" width="268" height="306">
+                                        </div>
+                                    @endif
+                                    <div class="product-content">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <h5 class="product-title" style="margin: 0; font-size: 1.25em;">{{ $item->name }}</h5>
+                                            <div class="product-price">{{ $item->price }} DT</div>
+                                        </div>
+
+                                        @if ($item->note)
+                                            <div style="margin-top: 0em; margin-bottom: -0.5em; color: #8f8f8f;">{{ $item->note }}</div>
+                                        @endif
+                                    </div>
+                                </a>
+                            @else
+
+                                @if ($item->logo)
+                                    <div class="product-thumb">
+                                        <img loading="lazy" src="{{ asset('storage/' . $item->logo) }}" alt="Product Image" width="268" height="306">
+                                    </div>
+                                @endif
                                 <div class="product-content">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <h5 class="product-title" style="margin: 0; font-size: 1.25em;">{{ $item->name }}</h5>
+                                        <div class="product-price">{{ $item->price }} DT</div>
+                                    </div>
 
-                                    <h5 class="product-title"><a href="/product/{{$numTable}}/{{$item -> id}}">{{$item -> name}}</a></h5>
-                                    <div class="product-price">{{$item -> price}}</div>
+                                    @if ($item->note)
+                                        <div style="margin-top: 0em; margin-bottom: -0.5em; color: #8f8f8f;">{{ $item->note }}</div>
+                                    @endif
                                 </div>
-                            </div>
+
+                            @endif
                         </div>
-                    @endforeach
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endforeach
+
+    <!-- Section for products without a category -->
+    <div class="category-section">
+        @if (!$productsByCategory['no_category']->isEmpty())
+            <h3>NO CATEGORY</h3>
+        @endif
+
+        <div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 mb-n6">
+            @foreach($productsByCategory['no_category'] as $item)
+                <div class="col mb-6">
+                    <div class="product">
+                        @if ($sendOrders)
+                            <a href="/product/{{ $numTable }}/{{ $item->id }}/{{ $item->idCafe }}" class="product-image">
+                                @if ($item->logo)
+                                    <div class="product-thumb">
+                                        <img loading="lazy" src="{{ asset('storage/' . $item->logo) }}" alt="Product Image" width="268" height="306">
+                                    </div>
+                                @endif
+                                <div class="product-content">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <h5 class="product-title" style="margin: 0; font-size: 1.25em;">{{ $item->name }}</h5>
+                                        <div class="product-price">{{ $item->price }} DT</div>
+                                    </div>
+
+                                    @if ($item->note)
+                                        <div style="margin-top: 0em; margin-bottom: -0.5em; color: #8f8f8f;">{{ $item->note }}</div>
+                                    @endif
+                                </div>
+                            </a>
+                        @else
+
+                            @if ($item->logo)
+                                <div class="product-thumb">
+                                    <img loading="lazy" src="{{ asset('storage/' . $item->logo) }}" alt="Product Image" width="268" height="306">
+                                </div>
+                            @endif
+                            <div class="product-content">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <h5 class="product-title" style="margin: 0; font-size: 1.25em;">{{ $item->name }}</h5>
+                                    <div class="product-price">{{ $item->price }} DT</div>
+                                </div>
+
+                                @if ($item->note)
+                                    <div style="margin-top: 0em; margin-bottom: -0.5em; color: #8f8f8f;">{{ $item->note }}</div>
+                                @endif
+                            </div>
+
+                        @endif
 
                     </div>
                 </div>
-            </div>
-            <!-- Product Tab End -->
+            @endforeach
+        </div>
+    </div>
+</div>
+<!-- Product Categories and Products End -->
+
 
 
         </div>
@@ -185,18 +284,23 @@
             <div class="container">
                 <div class="row mb-n8 gy-lg-0 gy-4">
 
-                    <!-- Footer Widget Start
-                    <div class="col-lg-6 col-sm-6 col-12 mb-8">
+                    <div class="col-lg-6 col-sm-6 col-12 mb-8" style="color: #fff">
                         <div class="footer-widget footer-widget-dark">
-                            <h5 class="footer-widget-title">About Info</h5>
-                            <p>This is the perfect place to find a nice and cozy spot to sip some. You'll find the Java Jungle.</p>
-                            <ul class="footer-widget-list-icon">
-                                <li><i class="sli-location-pin"></i>Adress: </li>
-                                <li><i class="sli-envelope"></i>Email: </li>
-                                <li><i class="sli-phone"></i>Phone: </li>
-                            </ul>
+                          <h5 class="footer-widget-title">Plus d'Information Sur Cette Application</h5>
+                          <ul style="margin: 0; padding: 0; list-style: none;">
+                            <li style="line-height: 1.5; display: flex; align-items: center; gap: 10px;">
+                              <i class="sli-phone"></i>Hotline: <a href="tel:+929530875" style="margin-left: 5px; color: inherit; text-decoration: none;">92 530 875</a>
+                            </li>
+                            <li style="line-height: 1.5; display: flex; align-items: center; gap: 10px; margin-top: 15px;">
+                              <i class="sli-envelope"></i>Email: <a href="mailto:Service@Paloma-Tech-Solutions.tn" style="margin-left: 5px; color: inherit; text-decoration: none;">Service@Paloma-Tech-Solutions.tn</a>
+                            </li>
+                            <li style="line-height: 1.5; display: flex; align-items: center; gap: 10px; margin-top: 15px;">
+                              <i class="sli-magnifier"></i>Notre Site Web: <a href="https://www.paloma-tech-solutions.tn" target="_blank" style="margin-left: 5px; color: inherit; text-decoration: none;">Paloma-Tech-Solutions.tn</a>
+                            </li>
+                          </ul>
                         </div>
-                    </div>-->
+                    </div>
+
 
                 </div>
             </div>
@@ -244,6 +348,27 @@
     <!-- Activation JS -->
     <script src="/assetsWeb/js/active.js"></script>
 
+    <!-- Modal2 -->
+    <div class="modal fade" id="noteModalPanier" tabindex="-1" aria-labelledby="noteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="noteModalLabel">Ajouter Une Remarque</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="noteForm" action="/Checkout/{{$numTable}}" method="post">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Ajouter Une Remarque Si Vous Voulez</label>
+                            <textarea class="form-control" id="remarque" name="remarque" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-dark">Confirmer l'Achat</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

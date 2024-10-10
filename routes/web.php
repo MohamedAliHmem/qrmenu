@@ -8,6 +8,13 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\QrCodeController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\FactureController;
+use App\Http\Controllers\ChangeOfferController;
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,52 +26,30 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-/*Route::get('/dashboard', function () {
-    return view('dashboard');
-});*/
+
 
 Route::get('/dashboard',[HomeController::class, 'dash']);
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('welcome_pages.first_page');
 });
 
 Route::get('/form', function () {
     return view('form-elements');
 });
 
-/*Route::get('/addOrder', function () {
-    return view('addOrder');
-});*/
-
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
-/*Route::get('/cafeDetails', function () {
-    return view('cafeDetails');
-});*/
-
 Route::get('/tables-cafe', function () {
     return view('tables-cafe');
 });
 
-/*Route::get('/shop', function () {
-    return view('WebSite/shop');
-});*/
-/*Route::get('/shop',[ProduitController::class, 'getProductUser']);*/
 Route::get('/shop/{table}/{idCafe}',[ProduitController::class, 'getProductUser']);
 
 Route::get('/product/{numTable}/{id}/{idCafe}',[ProduitController::class, 'infoProduct']);
 
-/*Route::get('/editableShop', function () {
-    return view('EditableWebSite/shop');
-});*/
-
-Route::get('/addProduct', function () {
+/*Route::get('/addProduct', function () {
     return view('addProduct');
-});
-
+});*/
+Route::get('/addProduct',[ProduitController::class, 'addProductView']);
 
 Route::get('/tables-cafe',[CafeController::class, 'getCafe']);
 
@@ -75,8 +60,6 @@ Route::get('/suppAdmin/{id}',[AdminController::class, 'deleteAdmin']);
 Route::get('/suppClient/{id}',[ClientController::class, 'deleteClient']);
 
 Route::get('/suppCafe/{id}',[CafeController::class, 'deleteCafe']);
-
-//Route::get('/modifier/{id}',[AdminController::class, 'modifierAdmin']);
 
 Route::post('/add-admin',[AdminController::class, 'ajoutAdmin']);
 
@@ -100,6 +83,8 @@ Route::post('/addP',[ProduitController::class, 'ajoutProduit']);
 Route::get('/tables-product',[ProduitController::class, 'getProduct']);
 
 Route::get('/suppProduct/{id}',[ProduitController::class, 'deleteProduct']);
+
+Route::get('/suppProductImage/{id}',[ProduitController::class, 'deleteProductImage']);
 
 Route::get('/modifier-product/{id}',[ProduitController::class, 'getProductId']);
 
@@ -126,7 +111,8 @@ Route::post('/addToCard/{numTable}/{id}/{idCafe}',[OrderController::class, 'AddT
 
 Route::get('/deleteProductCart/{id}/{quantity}/{numTable}/{idCafe}',[OrderController::class, 'DeleteTC']);
 
-Route::get('/Checkout/{numTable}',[OrderController::class, 'CheckoutNow']);
+//Route::get('/Checkout/{numTable}',[OrderController::class, 'CheckoutNow']);
+Route::post('/Checkout/{numTable}',[OrderController::class, 'CheckoutNow']);
 
 Route::get('/l', function () {
     return view('login');
@@ -140,15 +126,50 @@ Route::get('/addNewCafe', function () {
     return view('addNewCafe');
 });
 
+//qr code
 
-// POS
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
-
-Route::get('/payment', function () {
-    return view('pos/payment');
+Route::get('/qr_code_input', function () {
+    return view('qr_code/qr_code_input');
 });
 
-// routes/web.php
-Route::get('/pos', [PaymentController::class, 'showPOSPage']);
+Route::post('/generateQrCodes',[QrCodeController::class, 'generateQrCodes']);
+
+//Category
+
+/*Route::get('/addCategory', function () {
+    return view('categories.addCategory');
+});*/
+
+Route::get('/addCategory',[CategoryController::class, 'index']);
+
+Route::post('/add-category',[CategoryController::class, 'store']);
+
+Route::get('/modifyCategory/{id}',[CategoryController::class, 'getCategoryId']);
+
+Route::post('/updateCategory/{id}',[CategoryController::class, 'updateCategory']);
+
+Route::get('/deleteCategory/{id}',[CategoryController::class, 'deleteCategory']);
+
+//payment_sub
+
+Route::get('/payment_sub', function () {
+    return view('payment.payment_sub');
+});
+
+Route::post('/subscribe',[PaymentController::class, 'subscribe']);
+
+Route::get('/payment_details', function () {
+    return view('payment.payment_details_page');
+});
+
+//factures
+
+Route::get('/factures',[FactureController::class, 'infoFacture']);
+
+Route::get('/telechargerFacture',[FactureController::class, 'telechargerFacture']);
+
+//change offer
+
+Route::get('/change-offer',[ChangeOfferController::class, 'ChangeOfferView']);
+
+Route::post('/change-plan',[ChangeOfferController::class, 'changeOffer']);

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('products');
             $table->decimal('total', 8, 2);
             $table->boolean('payed')->default(false);
+            $table->string('remarque')->nullable();
             $table->timestamps();
         });
     }

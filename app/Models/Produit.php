@@ -9,7 +9,7 @@ class Produit extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['idCafe', 'name', 'price', 'logo'];
+    protected $fillable = ['idCafe', 'name', 'price', 'logo', 'idCategory', 'position', 'note'];
 
     public function menu()
     {

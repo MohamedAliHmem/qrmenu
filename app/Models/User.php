@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'idCafe', 
+        'idCafe',
         'idClient',
         'numTable',
         'adresse',
@@ -27,6 +27,8 @@ class User extends Authenticatable
         'role',
         'name',
         'email',
+        'secondEmail',
+        'idAbonnement',
         'password',
     ];
 
@@ -50,5 +52,5 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    
+
 }

@@ -2,17 +2,21 @@
 
 @section('contenu')
                     <div class="container-fluid">
+                        @if(Session::has('alert'))
+                        <div class="alert alert-danger">
+                            {{ Session::get('alert') }}
+                        </div>
+                    @endif
 
-                        
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
 
-                                      
+
                                         <form action="/modifierCafe/{{$data -> id}}" method="post" enctype="multipart/form-data">
-                                        @csrf  
-                                        
+                                        @csrf
+
                                         <div class="mb-3 row">
                                             <label for="example-text-input" class="col-md-2 col-form-label">Cafe name</label>
                                             <div class="col-md-10">
@@ -38,15 +42,30 @@
                                             </div>
                                         </div>
 
+                                        <div class="mb-3 row">
+                                            <label for="example-text-input" class="col-md-2 col-form-label">Email</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="email" placeholder="Email"
+                                                    id="example-text-input" name="email" value="{{$data -> email}}" required>
+                                            </div>
+                                        </div>
 
                                         <div class="mb-3 row">
+                                            <label for="example-text-input" class="col-md-2 col-form-label">Second Email</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="email" placeholder="Second Email"
+                                                    id="example-text-input" name="secondEmail" value="{{$data -> secondEmail}}">
+                                            </div>
+                                        </div>
+
+                                        <!--<div class="mb-3 row">
                                             <label for="example-text-input" class="col-md-2 col-form-label">Logo</label>
                                             <div class="col-md-10">
                                                 <input class="form-control" type="file" placeholder="Logo"
-                                                    id="example-text-input" accept="image/*" name="logo" value="{{$data -> logo}}">
-                                                
+                                                    id="example-text-input" accept="image/*" name="logo" value="logo">
+
                                             </div>
-                                        </div>
+                                        </div>-->
 
 
                                         <button type="submit" class="btn btn-danger">Modify</button>

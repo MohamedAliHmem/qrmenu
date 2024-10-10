@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        'https://paloma-tech-solutions.tn/login',
+        'https://paloma-tech-solutions.tn/register',
     ];
 }

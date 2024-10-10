@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use App\Models\Order;
 use App\Models\Produit;
+use App\Models\Abonnement;
+use App\Models\Category;
+
 class HomeController extends Controller
 {
     /**
@@ -27,8 +30,13 @@ class HomeController extends Controller
             $all += $t->total;
         }
         $orders[1]=$all;
-        $orders[3] = DB::select('SELECT * FROM orders WHERE idCafe = ?',[ Auth::user()->idCafe]);
-        $orders[3] = array_reverse($orders[3]);
+        $orders[3] = DB::table('orders')
+            ->where('idCafe', Auth::user()->idCafe)
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+
+        $orders[4] = Abonnement::where('idCafe', Auth::user()->idCafe)->first();
+
         return view('/dashboard', ['data' => $orders]);
     }
 
@@ -43,49 +51,43 @@ class HomeController extends Controller
         return redirect('/dashboard');
     }
 
-    /*public function viewD($id){
-        $find = Order::find($id);
-        foreach(str_split($find->products) as $product){
-            if($product == "/"){
-
-            }
-            
-        }
-        return view('/orderDetails', ['data' => $find], ['data' => $find]);
-    }*/
     public function viewD($id) {
         $find = Order::find($id);
+
         $products = [];
-        
-        // Split the products string by '/'
+
         $productList = explode('/', $find->products);
-    
-        // Iterate through each product in the list
+
         foreach ($productList as $productInfo) {
-            // Split productInfo by ':' to separate product ID and quantity
             $productData = explode(':', $productInfo);
-    
-            // Retrieve the product details from the database
-            $product = Produit::find($productData[0]); // Assuming product ID is at index 0
-    
-            // If product exists, add it to the products array along with its quantity
+
+            $product = Produit::find($productData[0]);
+            $categoryTitle = null;
+
             if ($product) {
                 $price = Produit::where('idCafe', Auth::user()->idCafe)
-                            ->where('id', $productData[0]) // Assuming product ID is at index 0
+                            ->where('id', $productData[0])
                             ->value('price');
 
-            $products[] = [
-                'name' => $product->name,
-                'quantity' => $productData[1], // Quantity is assumed to be at index 1
-                'price' => $price, // Assign the retrieved price to the product array
-            ];
+                if ($product->idCategory != 0) {
+                    $category = Category::where('id', $product->idCategory)->where('idCafe', $product->idCafe)->first();
+                    if ($category) {
+                        $categoryTitle = $category->title;
+                    }
+                }
+
+                $products[] = [
+                    'name' => $product->name,
+                    'quantity' => $productData[1],
+                    'price' => $price,
+                    'category_title' => $categoryTitle
+                ];
             }
         }
-    
-        // Pass the order details and products array to the view
+
         return view('/orderDetails', ['data' => $find, 'products' => $products]);
     }
-    
+
 
     /**
      * Show the application dashboard.
@@ -94,7 +96,7 @@ class HomeController extends Controller
      */
     /*public function index()
     {
-        
+
         return redirect('/dashboard');
     }*/
 }

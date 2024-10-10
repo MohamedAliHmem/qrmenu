@@ -6,19 +6,20 @@
         <meta charset="utf-8" />
         <title>Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-        <meta content="Themesbrand" name="author" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="/assets/images/favicon.ico">
+        <meta name="description" content="Découvrez Paloma Tech Solutions, votre partenaire idéal pour des menus digitaux et des QR codes dans le secteur de la restauration. Notre plateforme permet aux cafés et restaurants de créer, gérer et personnaliser leurs menus en ligne de manière simple et efficace. Offrez à vos clients une expérience de commande fluide et sans contact, directement depuis leur smartphone. Profitez de nos solutions innovantes pour optimiser la gestion de votre établissement, que vous soyez un petit café ou un grand restaurant.">
+        <meta name="keywords" content="QR Code Menu, Digital Menu, Restaurant QR Code, Cafe Menu Generator, Online Menu Creator, Contactless Menu, Menu QR Code Generator, Restaurant Management Tool, Order Online System, Customizable QR Code, Menu for Cafes, Digital Ordering System, Mobile Menu App, Food Ordering QR Code, Contactless Dining">
+
+        <!-- Favicons -->
+        <link rel="icon" href="{{ asset('assets-welcome-page/img/logo/P.png') }}" type="image/png">
 
         <!-- Bootstrap Css -->
-        <link href="http://abc.test/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="http://127.0.0.1:8000/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
         <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <!-- App Css-->
-        <link href="http://abc.test/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+        <link href="http://127.0.0.1:8000/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
         <!-- App js -->
-        <script src="http://abc.test/assets/js/plugin.js"></script>
+        <script src="http://127.0.0.1:8000/assets/js/plugin.js"></script>
 
     </head>
 
@@ -45,10 +46,10 @@
 
 
                         <div class="dropdown d-inline-block">
-                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                            <button type="button" class="btn header-item waves-effect" style="padding-left: 5px;" id="page-header-user-dropdown"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{Auth::user()->name}}</span>
-                                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                                <span class="d-xl-inline-block ms-1" key="t-henry">{{Auth::user()->name}}</span>
+                                <i class="mdi mdi-chevron-down d-xl-inline-block"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
@@ -76,13 +77,6 @@
                                 <i class="bx bx-cog bx-spin"></i>
                             </button>
                         </div>
-                        <!--
-                        <div class="dropdown d-inline-block">
-                            <button type="button" class="btn header-item noti-icon waves-effect">
-                            <a href="/editableShop" class="btn btn-primary waves-effect waves-light btn-sm">View Editable Web Site <i class="mdi mdi-arrow-right ms-1"></i></a>
-                            </button>
-                        </div>
--->
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item noti-icon waves-effect">
                             <a href="/shop/0/{{Auth::User()->idCafe}}" class="btn btn-primary waves-effect waves-light btn-sm">View Web Site <i class="mdi mdi-arrow-right ms-1"></i></a>
@@ -104,12 +98,13 @@
                         <ul class="metismenu list-unstyled" id="side-menu">
                             <li class="menu-title" key="t-menu">Menu</li>
 
-                            <ul class="sub-menu" aria-expanded="false">
 
-                                    <li><a href="/dashboard" key="t-default">Dashboards</a></li>
-                                </ul>
-
-
+                                <li>
+                                    <a href="/dashboard" class="waves-effect">
+                                        <i class="bx bx-home-circle"></i>
+                                        <span key="t-forms">Dashboards</span>
+                                    </a>
+                                </li>
 
 
                             <li class="menu-title" key="t-components">Components</li>
@@ -120,12 +115,16 @@
                                     <i class="bx bxs-eraser"></i>
                                     <span key="t-forms">Add</span>
                                 </a>
-                                <ul class="sub-menu" aria-expanded="false">
+                                <!--<ul class="sub-menu" aria-expanded="false">
                                     <li><a href="/form" key="t-form-elements">Add Client</a></li>
-                                </ul>
+                                </ul>-->
+
+                                <!--<ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="/addOrder" key="t-form-elements">Add Order</a></li>
+                                </ul>-->
 
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="/addOrder" key="t-form-elements">Add Order</a></li>
+                                    <li><a href="/addCategory" key="t-form-elements">Add Category</a></li>
                                 </ul>
 
                                 <ul class="sub-menu" aria-expanded="false">
@@ -138,13 +137,34 @@
                                     <i class="bx bx-list-ul"></i>
                                     <span key="t-tables">Lists</span>
                                 </a>
-                                <ul class="sub-menu" aria-expanded="false">
+                                <!--<ul class="sub-menu" aria-expanded="false">
                                     <li><a href="/tables-client" key="t-data-tables">Clients List</a></li>
-                                </ul>
+                                </ul>-->
 
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="/tables-product" key="t-data-tables">Products List</a></li>
+                                    <li><a href="/tables-product" key="t-data-tables">Products by Categories</a></li>
                                 </ul>
+                            </li>
+
+                            <li>
+                                <a href="/qr_code_input" class="waves-effect">
+                                    <i class="bx bx-file"></i>
+                                    <span key="t-tables">generate QR codes</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/factures" class="waves-effect">
+                                    <i class="bx bx-detail"></i>
+                                    <span key="t-tables">Factures</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/change-offer" class="waves-effect">
+                                    <i class="bx bxs-basket"></i>
+                                    <span key="t-tables">Change Offer</span>
+                                </a>
                             </li>
 
                         </ul>
@@ -170,91 +190,6 @@
                 </div>
                 <!-- End Page-content -->
 
-                <!-- Transaction Modal -->
-                <div class="modal fade transaction-detailModal" tabindex="-1" role="dialog" aria-labelledby="transaction-detailModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="transaction-detailModalLabel">Order Details</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="mb-2">Product id: <span class="text-primary">#SK2540</span></p>
-                                <p class="mb-4">Billing Name: <span class="text-primary">Neal Matthews</span></p>
-
-                                <div class="table-responsive">
-                                    <table class="table align-middle table-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Product</th>
-                                                <th scope="col">Product Name</th>
-                                                <th scope="col">Price</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">
-                                                    <div>
-                                                        <img src="/assets/images/product/img-7.png" alt="" class="avatar-sm">
-                                                    </div>
-                                                </th>
-                                                <td>
-                                                    <div>
-                                                        <h5 class="text-truncate font-size-14">Wireless Headphone (Black)</h5>
-                                                        <p class="text-muted mb-0">$ 225 x 1</p>
-                                                    </div>
-                                                </td>
-                                                <td>$ 255</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <div>
-                                                        <img src="/assets/images/product/img-4.png" alt="" class="avatar-sm">
-                                                    </div>
-                                                </th>
-                                                <td>
-                                                    <div>
-                                                        <h5 class="text-truncate font-size-14">Phone patterned cases</h5>
-                                                        <p class="text-muted mb-0">$ 145 x 1</p>
-                                                    </div>
-                                                </td>
-                                                <td>$ 145</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <h6 class="m-0 text-right">Sub Total:</h6>
-                                                </td>
-                                                <td>
-                                                    $ 400
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <h6 class="m-0 text-right">Shipping:</h6>
-                                                </td>
-                                                <td>
-                                                    Free
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <h6 class="m-0 text-right">Total:</h6>
-                                                </td>
-                                                <td>
-                                                    $ 400
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end modal -->
 
             </div>
                 <!-- end modal -->
@@ -313,20 +248,20 @@
         <div class="rightbar-overlay"></div>
 
         <!-- JAVASCRIPT -->
-        <script src="http://abc.test/assets/libs/jquery/jquery.min.js"></script>
-        <script src="http://abc.test/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="http://abc.test/assets/libs/metismenu/metisMenu.min.js"></script>
-        <script src="http://abc.test/assets/libs/simplebar/simplebar.min.js"></script>
-        <script src="http://abc.test/assets/libs/node-waves/waves.min.js"></script>
+        <script src="http://127.0.0.1:8000/assets/libs/jquery/jquery.min.js"></script>
+        <script src="http://127.0.0.1:8000/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="http://127.0.0.1:8000/assets/libs/metismenu/metisMenu.min.js"></script>
+        <script src="http://127.0.0.1:8000/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="http://127.0.0.1:8000/assets/libs/node-waves/waves.min.js"></script>
 
         <!-- apexcharts -->
-        <script src="http://abc.test/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <script src="http://127.0.0.1:8000/assets/libs/apexcharts/apexcharts.min.js"></script>
 
         <!-- dashboard init -->
-        <script src="http://abc.test/assets/js/pages/dashboard.init.js"></script>
+        <script src="http://127.0.0.1:8000/assets/js/pages/dashboard.init.js"></script>
 
         <!-- App js -->
-        <script src="http://abc.test/assets/js/app.js"></script>
+        <script src="http://127.0.0.1:8000/assets/js/app.js"></script>
     </body>
 
 </html>

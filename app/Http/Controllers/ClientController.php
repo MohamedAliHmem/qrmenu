@@ -9,6 +9,10 @@ use Auth;
 use App\Models\User;
 class ClientController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function getClient(){
         $clients = User::where('idCafe', Auth::user()->idCafe)
         ->where('role', 'client')
@@ -64,7 +68,7 @@ class ClientController extends Controller
 
         $client->name = $req->nom;
         $client->numTable = $req->nTable;
-        
+
         $client->update();
         return redirect('tables-client');
     }
