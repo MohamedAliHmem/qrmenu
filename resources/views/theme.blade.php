@@ -85,7 +85,7 @@
 -->
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item noti-icon waves-effect">
-                            <a href="/shop/0" class="btn btn-primary waves-effect waves-light btn-sm">View Web Site <i class="mdi mdi-arrow-right ms-1"></i></a>
+                            <a href="/shop/0/{{Auth::User()->idCafe}}" class="btn btn-primary waves-effect waves-light btn-sm">View Web Site <i class="mdi mdi-arrow-right ms-1"></i></a>
                             </button>
                         </div>
 

@@ -14,25 +14,25 @@ class ProduitController extends Controller
     public function getProduct(){
         $product = Produit::where('idCafe', Auth::user()->idCafe)
         ->get();
-        
+
         return view('tables-product', ['data' => $product]);
     }
 
-    public function getProductUser($table){
-        $product = Produit::where('idCafe', Auth::user()->idCafe)
+    public function getProductUser($table,$idCafe){
+        $product = Produit::where('idCafe', $idCafe)
         ->get();
-        
+
         if(isset($table)){
             return view('WebSite/shop', ['data' => $product, 'numTable' => $table]);
         }
         return view('WebSite/shop', ['data' => $product]);
     }
 
-    public function infoProduct($numTable,$id){
-        $product = Produit::where('idCafe', Auth::user()->idCafe)
+    public function infoProduct($numTable,$id,$idCafe){
+        $product = Produit::where('idCafe', $idCafe)
         ->where('id', $id)
         ->get();
-        
+
         return view('WebSite/product', ['data' => $product, 'numTable' => $numTable]);
     }
 
@@ -46,7 +46,7 @@ class ProduitController extends Controller
         $product->name = $req->name;
         if ($req->hasFile('logo')) {
             $product->logo = $req->file('logo')->store('images','public');
-        }   
+        }
         //dd($client);
         $product->save();
         return redirect('/addProduct')->with('alert', 'Product Added Successfully.');
@@ -65,11 +65,11 @@ class ProduitController extends Controller
 
     public function updateProduct(Request $req,$id){
         $cafe = Produit::find($id);
-        
+
         $cafe->name = $req->name;
         $cafe->price = $req->price;
         $cafe->logo = $req->logo;
-           
+
         $cafe->update();
         return redirect('tables-product');
     }

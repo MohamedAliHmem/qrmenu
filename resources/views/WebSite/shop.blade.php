@@ -57,21 +57,22 @@
                         <div class="header-cart-body">
                             <div class="header-cart-products">
                                 @foreach ($orderSeparated as $order)
-                                <?php
-                                    $product = \App\Models\Produit::find($order[0]);
-                                    $total = $total + ($product->price * $order[2]);
-                                    $count ++ ;
-                                ?>
-                                <div class="header-cart-product">
-                                    <div class="header-cart-product-thumb">
-                                        <a href="product-details.html" class="header-cart-product-image"><img src="{{asset('storage/'.$product->logo)}}" alt="House Coffee Original" width="90" height="103"></a>
-                                        <a href="/deleteProductCart/{{$product->id}}/{{$order[2]}}/{{$numTable}}" class="header-cart-product-remove"><i class="sli-close"></i></a>
+                                    <?php
+                                        $orderSeparatedByEtoile = array_filter(explode('*', $order));
+                                        $product = \App\Models\Produit::find($orderSeparatedByEtoile[0]);
+                                        $total = $total + ($product->price * $orderSeparatedByEtoile[1]);
+                                        $count ++ ;
+                                    ?>
+                                    <div class="header-cart-product">
+                                        <div class="header-cart-product-thumb">
+                                            <a href="product-details.html" class="header-cart-product-image"><img src="{{asset('storage/'.$product->logo)}}" alt="House Coffee Original" width="90" height="103"></a>
+                                            <a href="/deleteProductCart/{{$product->id}}/{{$orderSeparatedByEtoile[1]}}/{{$numTable}}/{{$product->idCafe}}" class="header-cart-product-remove"><i class="sli-close"></i></a>
+                                        </div>
+                                        <div class="header-cart-product-content">
+                                            <h5 class="header-cart-product-title"><a href="product-details.html">{{$product->name}}</a></h5>
+                                            <span class="header-cart-product-quantity">{{$orderSeparatedByEtoile[1]}} x ${{$product->price}}</span>
+                                        </div>
                                     </div>
-                                    <div class="header-cart-product-content">
-                                        <h5 class="header-cart-product-title"><a href="product-details.html">{{$product->name}}</a></h5>
-                                        <span class="header-cart-product-quantity">{{$order[2]}} x ${{$product->price}}</span>
-                                    </div>
-                                </div>
                                 @endforeach
 
 
@@ -155,7 +156,7 @@
                         <div class="col mb-6">
                             <div class="product">
                                 <div class="product-thumb">
-                                    <a href="/product/{{$numTable}}/{{$item -> id}}" class="product-image"><img loading="lazy" src="{{asset('storage/'.$item->logo)}}" alt="House Coffee Original" width="268" height="306"></a>
+                                    <a href="/product/{{$numTable}}/{{$item -> id}}/{{$item -> idCafe}}" class="product-image"><img loading="lazy" src="{{asset('storage/'.$item->logo)}}" alt="House Coffee Original" width="268" height="306"></a>
 
                                 </div>
                                 <div class="product-content">
@@ -184,18 +185,18 @@
             <div class="container">
                 <div class="row mb-n8 gy-lg-0 gy-4">
 
-                    <!-- Footer Widget Start -->
+                    <!-- Footer Widget Start
                     <div class="col-lg-6 col-sm-6 col-12 mb-8">
                         <div class="footer-widget footer-widget-dark">
                             <h5 class="footer-widget-title">About Info</h5>
                             <p>This is the perfect place to find a nice and cozy spot to sip some. You'll find the Java Jungle.</p>
                             <ul class="footer-widget-list-icon">
-                                <li><i class="sli-location-pin"></i>Adress: {{Auth::User()->adresse}}</li>
-                                <li><i class="sli-envelope"></i>Email: {{Auth::User()->email}}</li>
-                                <li><i class="sli-phone"></i>Phone: {{Auth::User()->telephone}}</li>
+                                <li><i class="sli-location-pin"></i>Adress: </li>
+                                <li><i class="sli-envelope"></i>Email: </li>
+                                <li><i class="sli-phone"></i>Phone: </li>
                             </ul>
                         </div>
-                    </div>
+                    </div>-->
 
                 </div>
             </div>

@@ -81,10 +81,10 @@ class OrderController extends Controller
         $order->products = $id . ':' . $req->quantity . '/';
         $order->total = $product->price * $req->quantity;
         $order->save();
-        return redirect("/shop/$numTable")->with('alert', 'Product Bought Successfully.');
+        return redirect("/shop/$numTable/$product->idCafe")->with('alert', 'Product Bought Successfully.');
     }
 
-    public function AddTC(Request $req,$numTable,$id){
+    public function AddTC(Request $req,$numTable,$id,$idCafe){
         if (session()->has('order')) {
             $order = session('order');
             session()->put('order', $order.$id."*".$req->quantity."/");
@@ -98,16 +98,17 @@ class OrderController extends Controller
             $sep = array_filter(explode('*', $orders));
             $dictionnaire[$sep[0]] = $sep[1];
         }*/
+        //dd($order);
 
-
-        return redirect("/shop/$numTable");
+        return redirect("/shop/$numTable/$idCafe");
     }
 
-    public function DeleteTC($id, $quantity,$numTable){
+    public function DeleteTC($id, $quantity,$numTable,$idCafe){
         $orderNonSeparated = session('order');
         $orderSeparated = array_filter(explode('/', $orderNonSeparated));
         foreach($orderSeparated as $order){
-            if ($order[0] == $id and $order[2] == $quantity){
+            $orderSeparatedByEtoile = array_filter(explode('*', $order));
+            if ($orderSeparatedByEtoile[0] == $id and $orderSeparatedByEtoile[1] == $quantity){
                 $string = $orderNonSeparated;
                 $pattern = preg_quote($order, '/') . '\/';
                 $replacement = '';
@@ -118,7 +119,7 @@ class OrderController extends Controller
             }
         }
         session()->put('order', $cleanString);
-        return redirect("/shop/$numTable");
+        return redirect("/shop/$numTable/$idCafe");
     }
 
     public function CheckoutNow($numTable){
@@ -138,7 +139,7 @@ class OrderController extends Controller
         }
         $order->save();
         session()->forget('order');
-        return redirect("/shop/$numTable")->with('alert', 'Product Bought Successfully.');
+        return redirect("/shop/$numTable/$product->idCafe")->with('alert', 'Product Bought Successfully.');
     }
 
     public function deleteO($id){

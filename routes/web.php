@@ -53,9 +53,9 @@ Route::get('/tables-cafe', function () {
     return view('WebSite/shop');
 });*/
 /*Route::get('/shop',[ProduitController::class, 'getProductUser']);*/
-Route::get('/shop/{table}',[ProduitController::class, 'getProductUser']);
+Route::get('/shop/{table}/{idCafe}',[ProduitController::class, 'getProductUser']);
 
-Route::get('/product/{numTable}/{id}',[ProduitController::class, 'infoProduct']);
+Route::get('/product/{numTable}/{id}/{idCafe}',[ProduitController::class, 'infoProduct']);
 
 /*Route::get('/editableShop', function () {
     return view('EditableWebSite/shop');
@@ -122,9 +122,9 @@ Route::get('/viewDetails/{id}',[HomeController::class, 'viewD']);
 
 Route::post('/buy/{numTable}/{id}',[OrderController::class, 'buyNow']);
 
-Route::post('/addToCard/{numTable}/{id}',[OrderController::class, 'AddTC']);
+Route::post('/addToCard/{numTable}/{id}/{idCafe}',[OrderController::class, 'AddTC']);
 
-Route::get('/deleteProductCart/{id}/{quantity}/{numTable}',[OrderController::class, 'DeleteTC']);
+Route::get('/deleteProductCart/{id}/{quantity}/{numTable}/{idCafe}',[OrderController::class, 'DeleteTC']);
 
 Route::get('/Checkout/{numTable}',[OrderController::class, 'CheckoutNow']);
 
@@ -139,3 +139,16 @@ Route::get('/addCafe', function () {
 Route::get('/addNewCafe', function () {
     return view('addNewCafe');
 });
+
+
+// POS
+/*Route::get('/', function () {
+    return view('welcome');
+});*/
+
+Route::get('/payment', function () {
+    return view('pos/payment');
+});
+
+// routes/web.php
+Route::get('/pos', [PaymentController::class, 'showPOSPage']);
